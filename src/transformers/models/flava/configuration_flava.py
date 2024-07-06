@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-""" FLAVA model configurations"""
+"""FLAVA model configurations"""
 
 import os
 from typing import Any, Dict, Union
@@ -22,10 +22,6 @@ from ...utils import logging
 
 
 logger = logging.get_logger(__name__)
-
-FLAVA_PRETRAINED_CONFIG_ARCHIVE_MAP = {
-    "facebook/flava-full": "https://huggingface.co/facebook/flava-full/resolve/main/config.json",
-}
 
 
 class FlavaImageConfig(PretrainedConfig):
@@ -53,7 +49,7 @@ class FlavaImageConfig(PretrainedConfig):
             The non-linear activation function (function or string) in the encoder and pooler. If string, `"gelu"`,
             `"relu"`, `"selu"` and `"gelu_new"` are supported.
         hidden_dropout_prob (`float`, *optional*, defaults to 0.0):
-            The dropout probabilitiy for all fully connected layers in the embeddings, encoder, and pooler.
+            The dropout probability for all fully connected layers in the embeddings, encoder, and pooler.
         attention_probs_dropout_prob (`float`, *optional*, defaults to 0.0):
             The dropout ratio for the attention probabilities.
         initializer_range (`float`, *optional*, defaults to 0.02):
@@ -188,7 +184,7 @@ class FlavaTextConfig(PretrainedConfig):
             The non-linear activation function (function or string) in the encoder and pooler. If string, `"gelu"`,
             `"relu"`, `"selu"` and `"gelu_new"` are supported.
         hidden_dropout_prob (`float`, *optional*, defaults to 0.1):
-            The dropout probabilitiy for all fully connected layers in the embeddings, encoder, and pooler.
+            The dropout probability for all fully connected layers in the embeddings, encoder, and pooler.
         attention_probs_dropout_prob (`float`, *optional*, defaults to 0.1):
             The dropout ratio for the attention probabilities.
         initializer_range (`float`, *optional*, defaults to 0.02):
@@ -302,7 +298,7 @@ class FlavaMultimodalConfig(PretrainedConfig):
             The non-linear activation function (function or string) in the encoder and pooler. If string, `"gelu"`,
             `"relu"`, `"selu"` and `"gelu_new"` are supported.
         hidden_dropout_prob (`float`, *optional*, defaults to 0.0):
-            The dropout probabilitiy for all fully connected layers in the embeddings, encoder, and pooler.
+            The dropout probability for all fully connected layers in the embeddings, encoder, and pooler.
         attention_probs_dropout_prob (`float`, *optional*, defaults to 0.0):
             The dropout ratio for the attention probabilities.
         initializer_range (`float`, *optional*, defaults to 0.02):
@@ -487,9 +483,9 @@ class FlavaConfig(PretrainedConfig):
         layer_norm_eps (`float`, *optional*, defaults to 1e-12):
             The epsilon used by the layer normalization layers.
         projection_dim (`int`, *optional*, defaults to 512):
-            Dimentionality of text and image projection layers.
+            Dimensionality of text and image projection layers.
         logit_scale_init_value (`float`, *optional*, defaults to 2.6592):
-            The inital value of the *logit_scale* paramter. Default is used as per the original FLAVA/CLIP
+            The initial value of the *logit_scale* parameter. Default is used as per the original FLAVA/CLIP
             implementation.
         initializer_range (`float`, *optional*, defaults to 0.02):
             The standard deviation of the truncated_normal_initializer for initializing all weight matrices.
@@ -594,9 +590,9 @@ class FlavaConfig(PretrainedConfig):
                     else:
                         message = (
                             f"`text_config_dict` is provided which will be used to initialize `FlavaTextConfig`. The "
-                            f'value `text_config["{key}"]` will be overriden.'
+                            f'value `text_config["{key}"]` will be overridden.'
                         )
-                    logger.warning(message)
+                    logger.info(message)
 
             # Update all values in `text_config` with the ones in `_text_config_dict`.
             text_config.update(_text_config_dict)
@@ -626,9 +622,9 @@ class FlavaConfig(PretrainedConfig):
                     else:
                         message = (
                             f"`image_config_dict` is provided which will be used to initialize `FlavaImageConfig`. "
-                            f'The value `image_config["{key}"]` will be overriden.'
+                            f'The value `image_config["{key}"]` will be overridden.'
                         )
-                    logger.warning(message)
+                    logger.info(message)
 
             # Update all values in `image_config` with the ones in `_image_config_dict`.
             image_config.update(_image_config_dict)
@@ -658,9 +654,9 @@ class FlavaConfig(PretrainedConfig):
                     else:
                         message = (
                             f"`multimodal_config_dict` is provided which will be used to initialize "
-                            f'`FlavaMultimodalConfig`. The value `multimodal_config["{key}"]` will be overriden.'
+                            f'`FlavaMultimodalConfig`. The value `multimodal_config["{key}"]` will be overridden.'
                         )
-                    logger.warning(message)
+                    logger.info(message)
 
             # Update all values in `multimodal_config` with the ones in `_multimodal_config_dict`.
             multimodal_config.update(_multimodal_config_dict)
@@ -691,9 +687,9 @@ class FlavaConfig(PretrainedConfig):
                     else:
                         message = (
                             f"`image_codebook_config_dict` is provided which will be used to initialize "
-                            f'`FlavaImageCodebookConfig`. The value `image_codebook_config["{key}"]` will be overriden.'
+                            f'`FlavaImageCodebookConfig`. The value `image_codebook_config["{key}"]` will be overridden.'
                         )
-                    logger.warning(message)
+                    logger.info(message)
 
             # Update all values in `image_codebook_config` with the ones in `_image_codebook_config_dict`.
             image_codebook_config.update(_image_codebook_config_dict)

@@ -53,8 +53,8 @@ else:
 class ObjectDetectionPipelineTests(unittest.TestCase):
     model_mapping = MODEL_FOR_OBJECT_DETECTION_MAPPING
 
-    def get_test_pipeline(self, model, tokenizer, processor):
-        object_detector = ObjectDetectionPipeline(model=model, image_processor=processor)
+    def get_test_pipeline(self, model, tokenizer, processor, torch_dtype="float32"):
+        object_detector = ObjectDetectionPipeline(model=model, image_processor=processor, torch_dtype=torch_dtype)
         return object_detector, ["./tests/fixtures/tests_samples/COCO/000000039769.png"]
 
     def run_pipeline_test(self, object_detector, examples):
@@ -73,17 +73,19 @@ class ObjectDetectionPipelineTests(unittest.TestCase):
 
         import datasets
 
-        dataset = datasets.load_dataset("hf-internal-testing/fixtures_image_utils", "image", split="test")
+        # we use revision="refs/pr/1" until the PR is merged
+        # https://hf.co/datasets/hf-internal-testing/fixtures_image_utils/discussions/1
+        dataset = datasets.load_dataset("hf-internal-testing/fixtures_image_utils", split="test", revision="refs/pr/1")
 
         batch = [
             Image.open("./tests/fixtures/tests_samples/COCO/000000039769.png"),
             "http://images.cocodataset.org/val2017/000000039769.jpg",
             # RGBA
-            dataset[0]["file"],
+            dataset[0]["image"],
             # LA
-            dataset[1]["file"],
+            dataset[1]["image"],
             # L
-            dataset[2]["file"],
+            dataset[2]["image"],
         ]
         batch_outputs = object_detector(batch, threshold=0.0)
 
@@ -101,7 +103,7 @@ class ObjectDetectionPipelineTests(unittest.TestCase):
                 )
 
     @require_tf
-    @unittest.skip("Object detection not implemented in TF")
+    @unittest.skip(reason="Object detection not implemented in TF")
     def test_small_model_tf(self):
         pass
 
